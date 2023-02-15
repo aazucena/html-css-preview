@@ -8,31 +8,29 @@
       <script type="module" src="index.js"></script>
   </head> 
   <body id="app">       
-      <header>
+      <header class="hero">
         <nav class="navbar">
           <div class="nav-logo">South Parallel</div>
           <div class="nav-menu">
-            <span>journal</span>
-            <span>book now</span>
+            <span class="nav-item">journal</span>
+            <span class="nav-item">book now</span>
             <span class="nav-icons">
               <a href="https://twitter.com" target="_blank"><img src="/src/assets/icons/twitter.svg" alt="twitter icon"></a>
               <a href="https://instagram.com" target="_blank"><img src="/src/assets/icons/insta.svg" alt="instagram icon"></a>
             </span>
           </div>
         </nav>
+          <div class="hero-grid">
+            <h1>The best destinations south of the equator</h1>
+            <a class="button secondary" href="/src/pages/explore/index.html">
+              <div class="button-container">
+                <span class="button-text">Explore</span>
+              </div>
+            </a>
+          </div>
       </header>
       <main>
-          <section class="hero">
-            <div class="hero-grid">
-              <h1>The best destinations south of the equator</h1>
-              <a class="button secondary" href="/src/pages/explore/index.html">
-                <div class="button-container">
-                  <span class="button-text">Explore</span>
-                </div>
-              </a>
-            </div>
-          </section>
-          <section>
+          <section class="main-sections">
               <div class="banner main">
                 <h2>Where we're going...</h2>
               </div>
@@ -41,21 +39,23 @@
                 <div class="main-image">
                   <img alt="Hillside of Brazil" src="/src/assets/images/brazil.jpg" />
                 </div>
-                <div class="text-container">
-                  <div class="title">
-                    <span>Brazil</span>
-                  </div>
-                  <p>Nulla in eu tempor est ad eiusmod culpa sit anim ipsum sint veniam. Elit consequat esse nisi cupidatat aute adipisicing velit sit sunt ut. Quis ullamco duis ea occaecat anim occaecat magna non laborum. Id sunt proident sit aute irure dolor exercitation. Ullamco magna irure eu consequat adipisicing ea consectetur officia occaecat.</p>
-                  <a href="#" class="button hyperlink">
-                    <div class="button-container">
-                      <span class="button-text">
-                        Leaving at Nov 25
-                      </span>
-                      <i class="button-icon">
-                        <img alt="long-right-icon" src="/src/assets/icons/long-arrow.svg">
-                      </i>
+                <div class="media-wrapper">
+                  <div class="text-container">
+                    <div class="title">
+                      <span>Brazil</span>
                     </div>
-                  </a>
+                    <p>Nulla in eu tempor est ad eiusmod culpa sit anim ipsum sint veniam. Elit consequat esse nisi cupidatat aute adipisicing velit sit sunt ut. Quis ullamco duis ea occaecat anim occaecat magna non laborum. Id sunt proident sit aute irure dolor exercitation. Ullamco magna irure eu consequat adipisicing ea consectetur officia occaecat.</p>
+                    <a href="#" class="button hyperlink">
+                      <div class="button-container">
+                        <span class="button-text">
+                          Leaving Nov 25
+                        </span>
+                        <i class="button-icon">
+                          <img alt="long-right-icon" src="/src/assets/icons/long-arrow.svg">
+                        </i>
+                      </div>
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -69,7 +69,7 @@
                   <img  alt="Town of Equador" src="/src/assets/images/equador.jpg" />
                 </div>
                 <div class="media-wrapper">
-                  <div class="icon">
+                  <div class="tag">
                     <img alt="asterisk" src="/src/assets/icons/asterisk.svg" />
                     <span>Popular Choice</span>
                   </div>
@@ -81,7 +81,7 @@
                     <a href="#" class="button hyperlink">
                       <div class="button-container">
                         <span class="button-text">
-                          Leaving at Dec 25
+                          Leaving Dec 25
                         </span>
                         <i class="button-icon">
                           <img alt="long-right-icon" src="/src/assets/icons/long-arrow.svg">
@@ -95,27 +95,20 @@
           </section>
       </main>
       <footer>
-        <nav></nav>
-        <div>
-          <ul>
-            <li><a href="#">Terms and Conditions</a></li>
-            <li><a href="#">Disclaimer</a></span>
-            <li><a href="#">FAQ</a></li>
-          </ul>
-          <div>
-            <span><h5>South Parallel Inc.</h5></span>
-            <span>Deliver bespoke travel experience</span>
-            <span><a href="/src/pages/about/index.html">About Us</a></span>
-          </div>
-          <div>
-            <span>Get in Touch</span>
-            <span>24/7 Sales Number.</span>
-            <span><a href="tel:18743876884">1-87-GET-SOUTH</a></span>
-          </div>
-          <!-- About Text -->
+        <div class="footer-content">
+          <span><a href="#">Terms and Conditions</a></span>
+          <span><a href="#">Disclaimer</a></span>
+          <span><a href="#">FAQ</a></span>
         </div>
-        <div>
-          <!-- Contact Text-->
+        <div class="footer-content">
+          <span><h5>South Parallel Inc.</h5></span>
+          <span>Deliver bespoke travel experience</span>
+          <span><a href="/src/pages/about/index.html">About Us</a></span>
+        </div>
+        <div class="footer-content">
+          <span>Get in Touch</span>
+          <span>24/7 Sales Number.</span>
+          <span><a href="tel:18743876884">1-87-GET-SOUTH</a></span>
         </div>
       </footer>
   </body>
