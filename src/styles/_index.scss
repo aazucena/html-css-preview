@@ -1,33 +1,76 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+
+
+
+/*------------------------
+@references https://codepen.io/davidhalford/pen/ALrbEP
+Function that calculates if text needs to be light or dark
+depending on the color passed.
+
+From this W3C document: http://www.webmasterworld.com/r.cgi?f=88&d=9769&url=http://www.w3.org/TR/AERT#color-contrast
+			
+Color brightness is determined by the following formula: 
+((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
+------------------------*/
+
+@function brightness-helper($color) {
+  $red: red($color) * 299; 
+  $green: green($color) * 587; 
+  $blue: blue($color) * 114;
+  $rgb: $red + $green + $blue;
+  @return round(calc($rgb / 1000));
+} 
+
+
+@function color-contrast($color) {
+  $brightness: brightness-helper($color);
+  $luminosity: brightness-helper(#fff);
+  $half-lum: calc($luminosity/2);
+
+  @if abs($brightness) < ($half-lum) {
+    @return white;
+  } @else {
+    @return black;
+  }
+}
+
+@function filter-color-contrast($color) {
+  $brightness: brightness-helper($color);
+  $luminosity: brightness-helper(#fff);
+  $half-lum: calc($luminosity/2);
+
+  @if abs($brightness) < ($half-lum) {
+    @return brightness(0%) invert(1);
+  } @else {
+    @return brightness(0%) invert(0);
+  }
+}
+
+
+@function button-hover-color($color) {
+  @return $color;
+}
+
+
 :root {
   --main-color: #CC36A2;
+  --filter-main-color: invert(28%) sepia(95%) saturate(2171%) hue-rotate(295deg) brightness(86%) contrast(84%);
   --secondary-color: #C5D96A;
+  --filter-secondary-color: invert(96%) sepia(15%) saturate(1457%) hue-rotate(11deg) brightness(91%) contrast(86%);
   --text-title-color: #616C2A;
   --text-content-color: #4F4F4F;
   --button-color: #CC36A2;
   --footer-color: #333333;
 }
 
-body {
-  margin: 0;
-}
-
-@function button-hover-color($color) {
-  @return lighten($color, 25%);
-}
-
-@function text-color($color) {
-  @if lightness($color) > 50% {
-    @return white;
-  } @else {
-    @return white;
-  }
-}
-
 
 html {
   font-family: 'Poppins', sans-serif;
+}
+
+body {
+  margin: 0;
 }
 
 main {
@@ -38,9 +81,9 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 31px 88px;
+  padding: 1.938rem 5.5rem;
   & > .nav-logo {
-    font-size: 33px;
+    font-size: 2.063rem;
     font-weight: 300;
     color: white;
     font-family: 'Josefin Sans', san-serif;
@@ -49,16 +92,29 @@ main {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    gap: 50px;
+    gap: 3.125rem;
+    & > .nav-item {
+      text-decoration: none;
+      color: black;
+      font-size: 1.375rem;
+      font-weight: 500;
+      &:hover {
+        color: var(--main-color);
+      }
+    }
     & > .nav-icons {
       display: flex;
       justify-content: space-evenly;
       align-items: center;
-      gap: 20px;
+      gap: 1.25rem;
       & a {
         display: flex;
         justify-content: center;
         align-items: center;
+        &:hover {
+          color: var(--main-color);
+          filter: var(--filter-main-color);
+        }
       }
     }
   }
@@ -82,6 +138,10 @@ main {
       font-size: 4.5rem;
       font-weight: 600;
       color:#fff;
+      width: 50%;
+    }
+    & > .button {
+      width: 16.25vmin;
     }
   }
 }
@@ -100,16 +160,18 @@ main {
     justify-content: center;
     background-color: transparent;
     border: 0;
-    border-top: 1px solid var(--secondary-color);
-    border-bottom: 1px solid var(--secondary-color);
+    border-top: 0.063rem solid var(--secondary-color);
+    border-bottom: 0.063rem solid var(--secondary-color);
     color:  var(--secondary-color);
   }
 }
 
+
+
 .button {
   text-decoration: none;
   font-size: 1.375rem;
-  border-radius: 45px;
+  border-radius: 2.813rem;
   font-weight: 400;
   border: 0.2125rem solid var(--button-color);
   color: var(--button-color);
@@ -120,25 +182,42 @@ main {
     align-items: center;
     align-self: stretch;
     justify-content: center;
-    padding: .475rem 1.25rem;
+    padding: .475rem 3.156rem;
     gap: 1rem;
   }
   &.hyperlink  {
     width: 30vmin;  
     & > .button-container {
       justify-content: center;
+      padding: .475rem 1.25rem;
       & > .button-text {
         flex-shrink: 1;
       }
+      &:after {
+        content: '';
+        display: inline-block;
+        cursor: pointer;
+        width: 4.25vmin;
+        height: 2.5vmin;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("/src/assets/icons/long-arrow.svg");
+      }
     }
     &:hover {
-      background-color: button-hover-color(#CC36A2);
-      color: text-color(#CC36A2);
+      background-color: var(--main-color);
+      color: color-contrast(#CC36A2);
+      & > .button-container:after {
+        filter: filter-color-contrast(#CC36A2);
+      }
     }
   }
   &:hover {
-    background-color: button-hover-color(#C5D96A);
-    color: black;
+    background-color: var(--secondary-color);
+    color: color-contrast(#C5D96A);
+    & > .button-container:after {
+        filter: filter-color-contrast(#C5D96A);
+    }
   }
   &:not(:hover) {
     transition-duration: 0.125s;
@@ -153,7 +232,7 @@ main {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 65px;
+  gap: 4.063rem;
 }
 
 .media {
@@ -186,7 +265,7 @@ main {
     display: flex;
     justify-content: start;
     align-items: flex-start;
-    gap: 61px;
+    gap: 3.813rem;
     & > .tag {
       display: flex;
       flex-direction: column;
@@ -197,9 +276,9 @@ main {
       font-size: 1.375rem;
       height: 100%;
       text-align: center;
-      gap: 15px;
+      gap: 0.938rem;
       & > img {
-        max-width: 48px;
+        max-width: 3rem;
       }
     }
     & > .text-container {
@@ -236,7 +315,7 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 309px;
+  min-height: 34vh;
   padding-left: 7.5rem;
   padding-right: 7.5rem;
   & > .footer-content {
@@ -246,5 +325,81 @@ footer {
     flex-direction: column;
     align-self: stretch;
     justify-content: center;
+    & > .footer-content-header {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 3.125rem;
+      & > .title-container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        & > .title {
+          font-size: 1.5rem;
+          font-weight: 700;
+        }
+        & > .subtitle {
+          font-size: 1.125rem;
+          font-weight: 300;
+        }
+      }
+    }
+    &.navigation {
+      gap: 2.125rem;
+      & > .nav-item {
+        text-decoration: none;
+        color: white;
+        font-size: 1.125rem;
+        font-weight: 300;
+        &:hover {
+          color: var(--secondary-color);
+        }
+      }
+    }
+    &.contacts {
+      & > .footer-contact {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+        text-align: right;
+        gap: 3.125rem;
+        & > .title-container {
+          display: flex;
+          flex-direction: column;
+          text-align: right;
+          gap: 3.125rem;
+          align-items: flex-end;
+          & > .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+          }
+          & > .subtitle {
+            font-size: 1.125rem;
+            font-weight: 300;
+          }
+        }
+        & > .info {
+          display: flex;
+          flex-direction: column;
+          font-weight: 300;
+          & > .link {
+            text-decoration: none;
+            color: white;
+            &:hover {
+              color: var(--secondary-color);
+            }
+          }
+        }
+      }
+    }
+    & .footer-button {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      .button {
+        width: auto;
+      }
+    }
   }
 }
