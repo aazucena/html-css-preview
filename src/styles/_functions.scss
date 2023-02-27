@@ -1,0 +1,46 @@
+/*------------------------
+@references https://codepen.io/davidhalford/pen/ALrbEP
+Function that calculates if text needs to be light or dark
+depending on the color passed.
+
+From this W3C document: http://www.webmasterworld.com/r.cgi?f=88&d=9769&url=http://www.w3.org/TR/AERT#color-contrast
+			
+Color brightness is determined by the following formula: 
+((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
+------------------------*/
+
+@function brightness-helper($color) {
+	$red: red($color) * 299;
+	$green: green($color) * 587;
+	$blue: blue($color) * 114;
+	$rgb: $red + $green + $blue;
+	@return round(calc($rgb / 1000));
+}
+
+@function color-contrast($color) {
+	$brightness: brightness-helper($color);
+	$luminosity: brightness-helper(#fff);
+	$half-lum: calc($luminosity/2);
+
+	@if abs($brightness) < ($half-lum) {
+		@return white;
+	} @else {
+		@return black;
+	}
+}
+
+@function filter-color-contrast($color) {
+	$brightness: brightness-helper($color);
+	$luminosity: brightness-helper(#fff);
+	$half-lum: calc($luminosity/2);
+
+	@if abs($brightness) < ($half-lum) {
+		@return brightness(0%) invert(1);
+	} @else {
+		@return brightness(0%) invert(0);
+	}
+}
+
+@function button-hover-color($color) {
+	@return $color;
+}

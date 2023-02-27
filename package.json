@@ -7,7 +7,8 @@
   "type": "module",
   "scripts": {
     "start": "parcel",
-    "prebuild": "rimraf public",
+    "clean": "rimraf public",
+    "prebuild": "rimraf public && rimraf .parcel-cache && rimraf dist",
     "build": "parcel build --dist-dir public",
     "predeploy": "rimraf public && parcel build --dist-dir public --public-url \"https://aazucena.github.io/html-css-preview/\"",
     "deploy": "gh-pages -d public"
@@ -17,6 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.3",
+    "cypress": "^12.7.0",
     "gh-pages": "^5.0.0",
     "parcel": "^2.8.3",
     "rimraf": "^4.1.2"

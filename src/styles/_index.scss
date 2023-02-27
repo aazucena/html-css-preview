@@ -1,69 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-
-
-
-/*------------------------
-@references https://codepen.io/davidhalford/pen/ALrbEP
-Function that calculates if text needs to be light or dark
-depending on the color passed.
-
-From this W3C document: http://www.webmasterworld.com/r.cgi?f=88&d=9769&url=http://www.w3.org/TR/AERT#color-contrast
-			
-Color brightness is determined by the following formula: 
-((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
-------------------------*/
-
-@function brightness-helper($color) {
-  $red: red($color) * 299; 
-  $green: green($color) * 587; 
-  $blue: blue($color) * 114;
-  $rgb: $red + $green + $blue;
-  @return round(calc($rgb / 1000));
-} 
-
-
-@function color-contrast($color) {
-  $brightness: brightness-helper($color);
-  $luminosity: brightness-helper(#fff);
-  $half-lum: calc($luminosity/2);
-
-  @if abs($brightness) < ($half-lum) {
-    @return white;
-  } @else {
-    @return black;
-  }
-}
-
-@function filter-color-contrast($color) {
-  $brightness: brightness-helper($color);
-  $luminosity: brightness-helper(#fff);
-  $half-lum: calc($luminosity/2);
-
-  @if abs($brightness) < ($half-lum) {
-    @return brightness(0%) invert(1);
-  } @else {
-    @return brightness(0%) invert(0);
-  }
-}
-
-
-@function button-hover-color($color) {
-  @return $color;
-}
-
-
-:root {
-  --main-color: #CC36A2;
-  --filter-main-color: invert(28%) sepia(95%) saturate(2171%) hue-rotate(295deg) brightness(86%) contrast(84%);
-  --secondary-color: #C5D96A;
-  --filter-secondary-color: invert(96%) sepia(15%) saturate(1457%) hue-rotate(11deg) brightness(91%) contrast(86%);
-  --text-title-color: #616C2A;
-  --text-content-color: #4F4F4F;
-  --button-color: #CC36A2;
-  --footer-color: #333333;
-}
-
+@import './_functions.scss';
+@import './_colors.scss';
 
 html {
   font-family: 'Poppins', sans-serif;
@@ -148,12 +85,14 @@ main {
 
 .banner {
   width: 100%;
-  font-size: 2.813rem;
+  & > h2 {
+    font-size: 2.813rem !important;
+  }
   &.main {
     display: flex;
     justify-content: center;
     background-color: var(--main-color);
-    color: #fff;
+    color: #fff; 
   }
   &.secondary {
     display: flex;
@@ -258,7 +197,7 @@ main {
     min-width: 60vmin;
     & > img {
       width: 100%;
-      height: 100%;
+      height: 100%  !important;
     }
   }
   & > .media-wrapper {
@@ -303,7 +242,6 @@ main {
         font-size: 1.125rem;
         font-weight: 300;
         line-height: 2.375rem;
-        width: 80vmin;
         color: var(--text-content-color);
       }
     }
@@ -315,6 +253,7 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row;
   min-height: 34vh;
   padding-left: 7.5rem;
   padding-right: 7.5rem;
@@ -399,6 +338,224 @@ footer {
       justify-content: center;
       .button {
         width: auto;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .hero {
+    padding: 2.875rem 0 !important;
+    min-height: 3.75vh !important;
+    
+    & > .hero-grid {
+      & > h1 {
+        font-size: 3.25rem !important;
+        width: 100% !important;
+      }
+    }
+  }
+    
+  .main-sections {
+    gap: 1.375rem !important;
+  }
+  .media {
+    padding: 2.75rem 4rem 5rem 4rem !important;
+    flex-direction: row !important;
+    gap: 2.75rem !important;
+    &.rtl {
+      flex-direction: row-reverse !important;  
+    }
+  
+    & > .main-image {
+      min-width: 30vmin !important;
+      justify-content: flex-start !important;
+      & > img {
+        height: fit-content;
+      }
+    }
+    & > .media-wrapper {
+      & > .text-container {
+        p {
+          width: auto !important;
+        }
+      }
+    }
+  }
+  
+  footer {
+    padding-left: 2.75rem !important;
+    padding-right: 2.75rem !important;
+    background-color: var(--footer-color);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row !important;
+    align-items: center;
+    & > .footer-content {
+      color: white !important;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-self: stretch;
+      justify-content: center;
+      & > .footer-content-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 3.125rem;
+        & > .title-container {
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+          & > .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+          }
+          & > .subtitle {
+            font-size: 1.125rem;
+            font-weight: 300;
+          }
+        }
+      }
+      &.navigation {
+        gap: 2.125rem;
+        & > .nav-item {
+          text-decoration: none;
+          color: white;
+          font-size: 1.125rem;
+          font-weight: 300;
+          &:hover {
+            color: var(--secondary-color);
+          }
+        }
+      }
+      &.contacts {
+        & > .footer-contact {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: flex-end;
+          text-align: right;
+          gap: 3.125rem;
+          & > .title-container {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+            gap: 3.125rem;
+            align-items: flex-end;
+            & > .title {
+              font-size: 1.5rem;
+              font-weight: 700;
+            }
+            & > .subtitle {
+              font-size: 1.125rem;
+              font-weight: 300;
+            }
+          }
+          & > .info {
+            display: flex;
+            flex-direction: column;
+            font-weight: 300;
+            & > .link {
+              text-decoration: none;
+              color: white;
+              &:hover {
+                color: var(--secondary-color);
+              }
+            }
+          }
+        }
+      }
+      & .footer-button {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        .button {
+          width: auto;
+        }
+      }
+    }
+  }
+}
+
+
+@media screen and (min-width: 768px) {
+  .hero {
+    padding: 2.875rem 0;
+    min-height: 3.75vh;
+    
+    & > .hero-grid {
+      & > h1 {
+        font-size: 3.25rem;
+        width: 100%;
+      }
+    }
+  }
+    
+  .main-sections {
+    gap: 1.375rem;
+  }
+  .media {
+    padding: 2.75rem 4rem 5rem 4rem;
+    gap: 2.75rem;
+    flex-direction: column;
+    &.rtl {
+      flex-direction: column;
+    }
+    & > .main-image {
+      min-width: 30vmin;
+      min-height: 30vmin;
+    }
+    & > .media-wrapper {
+      & > .text-container {
+        p {
+          width: auto;
+        }
+      }
+    }
+  }
+  footer {
+    flex-direction: column;
+    align-items: center;
+    min-height: 26vh;
+    gap: 5rem;
+    padding: 7.5rem 5rem;
+    & > .footer-content {
+      align-items: center;
+      & > .footer-content-header {
+        gap: 1.375rem;
+      }
+      &.navigation {
+        gap: 2.375rem;
+      }
+      &.contacts {
+        & > .footer-contact {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          text-align: center;
+          gap: 1.375rem;
+          & > .title-container {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            gap: 2.375rem;
+            align-items: center;
+          }
+          & > .info {
+            display: flex;
+            flex-direction: column;
+            font-weight: 300;
+            & > .link {
+              text-decoration: none;
+              color: white;
+              &:hover {
+                color: var(--secondary-color);
+              }
+            }
+          }
+        }
       }
     }
   }
